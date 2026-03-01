@@ -1,12 +1,13 @@
+@login
 Feature:  Login to HRM Application
 
   Background:
-    Given User is on HRLLogin page "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+    Given User is on HRMLogin page
 
   @ValidCredentials
   Scenario: Login with valid credentials
-      When User enters username as "Admin" and password as "admin123"
-      Then User should be able to login successfully and new page open
+      When User enters valid credentials
+      Then User should be able to login successfully and new page open "Dashboard"
 
   @InvalidCredentials
   Scenario Outline: Login with invalid credentials
