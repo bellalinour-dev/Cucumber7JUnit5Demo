@@ -2,6 +2,7 @@ package com.example.actions;
 
 import com.example.locators.HomePageLocators;
 import com.example.utils.HelperClass;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePageActions {
@@ -13,9 +14,8 @@ public class HomePageActions {
         PageFactory.initElements(HelperClass.getDriver(), homePageLocators);
     }
 
-    public String verifyHomePage() {
-      return homePageLocators.dashboardText.getText();
-
+    //Get Username From Home Page
+    public WebElement getHomePageText(){
+        return homePageLocators.homePageUserName;
     }
-
 }

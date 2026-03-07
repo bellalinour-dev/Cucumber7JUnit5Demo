@@ -1,5 +1,6 @@
 package com.example.definitions;
 
+import com.example.actions.ForgotPasswordActions;
 import com.example.actions.HomePageActions;
 import com.example.actions.LoginPageActions;
 import com.example.utils.ConfigFileReader;
@@ -11,35 +12,59 @@ import org.junit.jupiter.api.Assertions;
 
 public class LoginPageDefinitions {
 
-    private HomePageActions homePageActions;
-    private LoginPageActions loginPageActions;
-    private ConfigFileReader configFileReader;
-
-    public LoginPageDefinitions() {
-        homePageActions = new HomePageActions();
-        loginPageActions = new LoginPageActions();
-        configFileReader = new ConfigFileReader();
-    }
+    ForgotPasswordActions forgotPasswordActions = new ForgotPasswordActions();
+    HomePageActions homePageActions = new HomePageActions();
+    LoginPageActions loginPageActions = new LoginPageActions();
+    ConfigFileReader configFileReader = new ConfigFileReader();
 
     // ========== BACKGROUND ==========
+
     @Given("User is on HRMLogin page")
     public void userIsOnHrmLoginPage() {
         HelperClass.getDriver().get(configFileReader.getProperty("home.url"));
     }
 
     // ========== LOGIN ==========
-    @When("User enters valid credentials")
-    public void userEntersValidCredentials() {
 
-        loginPageActions.getUserName().sendKeys(configFileReader.getProperty("home.username"));
-        loginPageActions.getPassword().sendKeys(configFileReader.getProperty("home.password"));
-        loginPageActions.getLoginButton().click();
+    @When("User enters username as {string} and password as {string}")
+    public void userEntersUsernameAsAndPasswordAs(String username, String password) {
+        loginPageActions.login(username, password);
     }
 
     @Then("User should be able to login successfully and new page open {string}")
     public void userShouldBeAbleToLoginSuccessfullyAndNewPageOpen(String message) {
-        // Vérify Dashboard text via HomePageActions
-        Assertions.assertEquals(homePageActions.verifyHomePage(),message);
+        //Verify Home Page
+        Assertions.assertEquals(homePageActions.getHomePageText().getText(), message);
     }
-}
 
+    @Then("User should be able to see error message {string}")
+    public void userShouldBeAbleToSeeErrorMessage(String errorMessage) {
+        Assertions.assertTrue(loginPageActions.getErrorMessage().contains("Invalid credentials"), errorMessage);
+    }
+
+    // ========== SOCIAL LINKS ==========
+
+    @Then("User should be able to see FaceBook Icon")
+    public void userShouldBeAbleToSeeFaceBookIcon() {
+        Assertions.assertTrue(loginPageActions.getFaceBookIcon());
+    }
+
+    @Then("User should be able to see LinkedIn Icon")
+    public void userShouldBeAbleToSeeLinkedInIcon() {
+        Assertions.assertTrue(loginPageActions.getLinkedInIcon());
+    }
+
+    // ========== FORGOT PASSWORD ==========
+
+    @When("User clicks on forgot your password link")
+    public void userClicksOnForgotYourPasswordLink() {
+        loginPageActions.clickOnForgetYourPasswordLInk();
+    }
+
+    @Then("User should navigate to new Page {string}")
+    public void userShouldNavigateToNewPage(String headingText) {
+        Assertions.assertTrue(forgotPasswordActions.getForgotPasswordPageText().contains("Reset Password"));
+    }
+
+
+}

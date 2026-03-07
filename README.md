@@ -1,107 +1,158 @@
-# 🥒 Integration of Cucumber 7 with Selenium and JUnit 5
+# 🥒 Framework d’Automatisation Cucumber 7 + Selenium + JUnit 5
 
-This project is a demonstration framework showcasing how to configure and execute BDD automated tests using Cucumber 7, Selenium WebDriver, and JUnit 5.
+Ce projet est un framework d’automatisation BDD démontrant comment configurer et exécuter des tests automatisés Web en utilisant :
 
-It provides a clean and scalable structure suitable for both learning purposes and real-world automation projects.
+Cucumber 7
 
-# 🧪 Project Overview
+Selenium WebDriver
 
-The objective of this framework is to establish a clear and maintainable automation setup that enables:
+JUnit 5 (JUnit Jupiter)
 
-Writing behavior-driven tests using Cucumber (Gherkin syntax)
+Maven
 
-Running tests with JUnit Jupiter (JUnit 5)
+Il propose une architecture propre, évolutive et maintenable, adaptée aussi bien à l’apprentissage qu’à des projets d’automatisation en environnement professionnel.
 
-Automating browser interactions through Selenium WebDriver
+# 🎯 Objectif du projet
 
-Managing dependencies and build lifecycle with Maven
+L’objectif de ce framework est de mettre en place une architecture claire et maintenable permettant de :
 
-This structure ensures separation of concerns, maintainability, and easy extensibility for future enhancements.
+- Écrire des scénarios de tests en BDD avec la syntaxe Gherkin
 
-# 🛠️ Tech Stack
+- Exécuter les tests avec JUnit 5
 
-The framework is built using the following technologies:
+- Automatiser les interactions navigateur via Selenium WebDriver
 
-Cucumber – 7.14.0
+- Gérer les dépendances et le cycle de build avec Maven
 
-Java – 21
+- Générer des rapports d’exécution détaillés
 
-JUnit Jupiter (JUnit 5) – 5.10.1
+Le framework respecte les principes de séparation des responsabilités (Separation of Concerns) afin d’assurer scalabilité et maintenabilité.
 
-```Structure of the projet
-project-root
-│
+# 🛠️ Stack Technique
+
+Technologie	Version : 
+```
+Java 21
+Cucumber 7.14.0
+Selenium WebDriver 4.15.0
+JUnit Jupiter 5.10.1
+Maven 3.9.x
+```
+
+# 📁 Structure du projet
+
+```
 ├── src
-│   ├── main/java
-│   │   ├── actions/        # Business actions layer
-│   │   ├── locators/       # Page element locators
-│   │   └── utils/          # Utility classes
+│   ├── main
+│   │   └── java
+│   │       └── com
+│   │           └── example
+│   │               ├── actions
+│   │               │   ├── ForgotPasswordActions.java
+│   │               │   ├── HomePageActions.java
+│   │               │   └── LoginPageActions.java
+│   │               │
+│   │               ├── locators
+│   │               │   ├── ForgotPasswordLocators.java
+│   │               │   ├── HomePageLocators.java
+│   │               │   └── LoginPageLocators.java
+│   │               │
+│   │               └── utils
+│   │                   ├── ConfigFileReader.java
+│   │                   └── HelperClass.java
 │   │
-│   └── test/java
-│       ├── steps/          # Step definitions
-│       ├── runner/         # Cucumber test runner
-│       └── definition/     # Supporting test definitions
-│
-├── test/resources
-│   ├── features/           # Gherkin feature files
-│   ├── config/             # Configuration files
-│
-├── target/
-│   └── cucumber-reports/   # Generated reports
-│
-│
-├── pom.xml
-└── README.md
-This structure promotes modularity and makes the framework easy to scale and maintain.
+│   └── test
+│       ├── java
+│       │   └── com
+│       │       └── example
+│       │           ├── definitions
+│       │           │   ├── Hooks.java
+│       │           │   └── LoginPageDefinitions.java
+│       │           │
+│       │           └── runner
+│       │               └── CucumberRunnerTests.java
+│       │
+│       └── resources
+│           ├── features
+│           │   └── login.feature
+│           │
+│           └── junit-platform.properties
+``` 
 
-▶️ Running Tests from the Command Line
+# 🏗️ Architecture
 
-To execute the automated test suite using Maven, run:
+Le projet est organisé en plusieurs couches :
 
-mvn clean verify
+Couche Locators → Contient uniquement les éléments Web (WebElement).
 
-This command will:
+Couche Actions → Contient les actions métier réutilisables.
 
-Clean the previous build
+Couche Steps → Fait le lien entre les scénarios Gherkin et le code Java.
 
-Compile the project
+Couche Runner → Configure et lance l’exécution des tests.
 
-Execute all Cucumber scenarios
+Couche Utils → Gestion du driver, configuration, classes utilitaires.
 
-Generate test reports in the target directory
-# Integration of Cucumber 7 with Selenium and JUnit 5
+Cette organisation favorise :
 
-This project is a sample application demonstrating how to set up and run **Cucumber tests** using **Selenium** and **JUnit 5**.
+-La réutilisabilité du code
 
----
+-Une maintenance simplifiée
 
-## 🧪 Project Overview
+-Une extension facile du framework
 
-The goal of this framework is to provide a clean and simple setup for:
-- Writing BDD tests with **Cucumber**
-- Executing tests with **JUnit Jupiter (JUnit 5)**
-- Automating web tests using **Selenium**
-- Managing dependencies and build lifecycle with **Maven**
+▶️ Exécution des tests
 
----
+✅ Lancer tous les tests : mvn clean verify
 
-## 🛠️ Tech Stack
+* ****Cette** commande va** :
 
-The framework is built with the following technologies:
+-Nettoyer les builds précédents
 
-- **Cucumber**: `7.14.0`
-- **Java**: `17`
-- **JUnit Jupiter**: `5.10.1`
-- **Maven**: `3.9.5`
-- **Selenium**: `4.15.0`
+-Compiler le projet
 
----
+-Exécuter tous les scénarios Cucumber
 
-## ▶️ Run Tests from Command Line
+-Générer les rapports dans le dossier target
 
-To execute the tests using Maven, run the following command:
+# 📊 Rapports d’exécution
 
-```bash
-mvn clean verify 
+Après exécution, les rapports sont disponibles dans :
 
+target/cucumber-reports/
 
+Ils fournissent :
+
+Les scénarios réussis
+
+Les scénarios échoués
+
+Le temps d’exécution
+
+Le détail des étapes exécutées
+
+# 🚀 Évolution du framework
+
+Pour étendre le framework, vous pouvez :
+
+Ajouter de nouveaux fichiers feature dans features/
+
+Créer de nouvelles définitions de steps dans steps/
+
+Ajouter des actions métier dans actions/
+
+Ajouter des utilitaires dans utils/
+
+L’architecture est conçue pour être utilisée dans des projets d’automatisation réels et évolutifs.
+
+# ✅ Bonnes pratiques mises en œuvre
+
+Séparation claire des responsabilités
+
+Implémentation du pattern Page Object
+
+Configuration externalisée
+
+Intégration au cycle Maven
+
+Organisation modulaire du projet
